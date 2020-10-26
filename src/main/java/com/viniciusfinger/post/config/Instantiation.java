@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.viniciusfinger.post.domain.Post;
 import com.viniciusfinger.post.domain.User;
+import com.viniciusfinger.post.dto.AuthorDTO;
 import com.viniciusfinger.post.repositories.PostRepository;
 import com.viniciusfinger.post.repositories.UserRepository;
 
@@ -17,7 +18,7 @@ import com.viniciusfinger.post.repositories.UserRepository;
 public class Instantiation implements CommandLineRunner {
 
 	@Autowired
-	private UserRepository repository;
+	private UserRepository userRepository;
 	
 	@Autowired
 	private PostRepository postRepository;
@@ -28,17 +29,22 @@ public class Instantiation implements CommandLineRunner {
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		postRepository.deleteAll();
-		repository.deleteAll();
+		userRepository.deleteAll();
 		
 		User maria = new User(null, "Maria Brown", "maria@gmail.com");
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "vou viajar para são paulo, abraços", maria);
-		Post post2 = new Post(null, sdf.parse("30/10/2001"), "Hoje é meu aniversário", "30 de outubro faço 19 anos.", bob);
+		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
-		repository.saveAll(Arrays.asList(maria, alex, bob));
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "vou viajar para são paulo, abraços", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("30/10/2001"), "Hoje é meu aniversário", "30 de outubro faço 19 anos.", new AuthorDTO(bob));
+		
 		postRepository.saveAll(Arrays.asList(post1,post2));
+		
+		maria.getPosts().add(post1);
+		bob.getPosts().add(post2);
+		
+		userRepository.saveAll(Arrays.asList(maria, bob));
 	}
-
 }
