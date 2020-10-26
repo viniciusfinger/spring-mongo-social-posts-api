@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.viniciusfinger.post.domain.User;
+import com.viniciusfinger.post.dto.UserDTO;
 import com.viniciusfinger.post.repositories.UserRepository;
 import com.viniciusfinger.post.services.exceptions.ObjectNotFoundException;
 
@@ -29,5 +30,12 @@ public class UserService {
 			return user; 
 		}	
 	}
+	
+	public User insert(User obj) {
+		return repository.insert(obj);
+	}
+	
+	public User fromDTO (UserDTO objDTO) {
+		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
+	}
 }
-
