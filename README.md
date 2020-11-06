@@ -1,6 +1,6 @@
 # api-posts
 
-Projeto Spring utilizando NoSQL. 
+Projeto Spring utilizando banco não relacional mongoDb. 
 
 
 [] Criar endpoint para adicionar comentário.
