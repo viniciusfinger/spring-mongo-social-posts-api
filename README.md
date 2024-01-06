@@ -1,6 +1,3 @@
-# api-posts
+# Spring Mongo Social Posts API
 
-Projeto Spring utilizando banco não relacional mongoDb. 
-
-
-[] Criar endpoint para adicionar comentário.
+Simple project to study jpa mapping in non-relational databases
